@@ -134,11 +134,51 @@
 
         @media (min-width: 1024px) { .visual-asset { height: 500px; border-radius: 48px; } }
 
-        /* Estilos das Animações */
-        .cloud-icon { font-size: 5rem; filter: drop-shadow(0 0 30px var(--primary)); animation: float 3s infinite ease-in-out; }
-        .upload-bar { width: 140px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 20px; overflow: hidden; }
-        .upload-progress { width: 40%; height: 100%; background: var(--primary); animation: loading 2s infinite ease-in-out; }
+        /* --- NOVA ANIMAÇÃO CSS FILESENDER (SUBSTITUI O FOGUETE) --- */
+        .fs-logo-anim {
+            position: relative; width: 100px; height: 100px;
+            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 40px; /* Espaço para a barra de upload */
+        }
+        /* O avião principal */
+        .fs-plane-main {
+            position: absolute; width: 70px; height: 70px;
+            background: var(--primary);
+            /* Cria a forma de avião de papel */
+            clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%);
+            filter: drop-shadow(0 0 25px var(--primary));
+            animation: planeSoar 4s ease-in-out infinite;
+            z-index: 2;
+        }
+        /* O rastro/sombra fantasma */
+        .fs-plane-trail {
+            position: absolute; width: 50px; height: 50px;
+            background: var(--primary);
+            clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%);
+            opacity: 0.3;
+            filter: blur(8px);
+            animation: trailFollow 4s ease-in-out infinite;
+        }
 
+        @keyframes planeSoar {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(25px, -35px) rotate(20deg) scale(1.1); }
+            50% { transform: translate(0, -15px) rotate(0deg) scale(1); }
+            75% { transform: translate(-25px, -35px) rotate(-20deg) scale(1.1); }
+        }
+        @keyframes trailFollow {
+             0%, 100% { transform: translate(-15px, 20px) scale(0.8) rotate(0deg); opacity: 0.2; }
+             25% { transform: translate(5px, -20px) scale(0.9) rotate(20deg); opacity: 0.5; }
+             50% { transform: translate(-15px, 10px) scale(0.8) rotate(0deg); opacity: 0.2; }
+             75% { transform: translate(-40px, -20px) scale(0.9) rotate(-20deg); opacity: 0.5; }
+        }
+
+        /* Barra de upload abaixo da nova logo */
+        .upload-bar-fs { width: 140px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+        .upload-progress-fs { width: 40%; height: 100%; background: var(--primary); animation: loading 2s infinite ease-in-out; }
+
+
+        /* --- OUTRAS ANIMAÇÕES (MANTIDAS) --- */
         .library-container { display: flex; gap: 12px; align-items: flex-end; perspective: 1000px; }
         .book-3d { width: 45px; background: var(--secondary); border-radius: 5px; }
         .b2 { height: 200px; animation: bookFloat 4s infinite ease-in-out; box-shadow: 0 20px 40px rgba(0,168,89,0.2); }
@@ -148,7 +188,6 @@
 
         .play-sphere { width: 110px; height: 110px; background: var(--eduplay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulseSphere 2s infinite; }
 
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
         @keyframes bookFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
@@ -199,11 +238,12 @@
                 <p>Envie arquivos de até 400GB com a segurança e velocidade da rede nacional de pesquisa.</p>
                 <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Ffilesender.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Ffilesender.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642298_1572" class="btn-premium" target="_blank">Acessar Arquivos</a>
             </div>
-            <div class="visual-asset">
-                <div class="cloud-container">
-                    <div class="cloud-icon">🚀</div>
-                    <div class="upload-bar"><div class="upload-progress"></div></div>
+            <div class="visual-asset" style="flex-direction: column;">
+                <div class="fs-logo-anim">
+                    <div class="fs-plane-trail"></div>
+                    <div class="fs-plane-main"></div>
                 </div>
+                <div class="upload-bar-fs"><div class="upload-progress-fs"></div></div>
             </div>
         </div>
 
