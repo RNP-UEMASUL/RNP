@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEMASUL | Hub Digital de Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --primary: #004a99;
+            --secondary: #00a859;
+            --accent: #fdb913;
+            --eduplay: #ff4757;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Fundo Mesh de Luxo */
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(0, 74, 153, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(0, 168, 89, 0.1) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 60px; }
+
+        /* Navegação */
+        nav { padding: 40px 0; display: flex; justify-content: space-between; align-items: center; }
+        .logo { height: 50px; }
+        .badge { background: var(--glass); border: 1px solid var(--glass-border); padding: 8px 16px; border-radius: 100px; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--text-dim); }
+
+        /* Hero com Efeito Máquina de Escrever */
+        .hero { padding: 80px 0 100px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .typewriter-container { display: inline-block; position: relative; }
+
+        .hero h1 { 
+            font-size: clamp(2rem, 6vw, 5rem); 
+            font-weight: 800; 
+            letter-spacing: -3px; 
+            line-height: 1.1;
+            overflow: hidden;
+            border-right: .15em solid var(--accent);
+            white-space: nowrap;
+            margin: 0 auto;
+            width: 0;
+            animation: 
+                typing 3.5s steps(30, end) forwards,
+                blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
+
+        /* Card de Instrução CAFe */
+        .cafe-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+            backdrop-filter: blur(20px);
+        }
+        .instruction-box { background: rgba(0, 168, 89, 0.05); border-left: 4px solid var(--secondary); padding: 30px; border-radius: 0 20px 20px 0; }
+        .instruction-box h4 { color: var(--secondary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
+        .instruction-box p { font-size: 1.2rem; line-height: 1.4; }
+
+        /* Ferramentas */
+        .tool-row { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; padding: 120px 0; align-items: center; border-top: 1px solid var(--glass-border); }
+        .tool-row:nth-child(even) { direction: rtl; }
+        .tool-row:nth-child(even) .content { direction: ltr; }
+
+        .tool-row h2 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 25px; }
+        .tool-row p { font-size: 1.3rem; color: var(--text-dim); margin-bottom: 30px; font-weight: 300; }
+        
+        .btn-premium {
+            display: inline-block; padding: 20px 45px; background: #fff; color: #000;
+            text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s;
+        }
+        .btn-premium:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255,255,255,0.2); }
+
+        /* Quadros Animados */
+        .visual-asset {
+            height: 500px; background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 40px; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Animações específicas */
+        .cloud-icon { font-size: 6rem; filter: drop-shadow(0 0 30px var(--primary)); animation: float 3s infinite ease-in-out; }
+        .upload-bar { width: 150px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 20px; overflow: hidden; }
+        .upload-progress { width: 40%; height: 100%; background: var(--primary); animation: loading 2s infinite ease-in-out; }
+
+        .library-container { display: flex; gap: 15px; align-items: flex-end; perspective: 1000px; }
+        .book-3d { width: 50px; background: var(--secondary); border-radius: 5px; transform-style: preserve-3d; }
+        .b2 { height: 220px; transform: translateZ(30px); animation: bookFloat 4s infinite ease-in-out; }
+
+        .ui-screen { width: 300px; height: 180px; background: rgba(255,255,255,0.03); border: 2px solid var(--accent); border-radius: 20px; position: relative; overflow: hidden; }
+        .wave { position: absolute; width: 100%; height: 2px; background: var(--accent); top: 50%; opacity: 0.3; animation: scan 3s infinite linear; }
+
+        .play-sphere { width: 120px; height: 120px; background: var(--eduplay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulseSphere 2s infinite; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+        @keyframes bookFloat { 0%, 100% { transform: translateZ(30px) translateY(0); } 50% { transform: translateZ(30px) translateY(-15px); } }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+        @keyframes pulseSphere { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        /* Seção de Contato */
+        .support-section { padding: 100px 0; border-top: 1px solid var(--glass-border); }
+        .support-header { text-align: center; margin-bottom: 60px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .contact-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 40px; border-radius: 30px; text-align: center; transition: 0.3s; backdrop-filter: blur(10px); }
+        .contact-card:hover { transform: translateY(-10px); border-color: var(--accent); background: rgba(255, 255, 255, 0.05); }
+        .contact-icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+        .contact-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
+        .contact-card p { color: var(--text-dim); margin-bottom: 10px; font-weight: 600; }
+        .contact-link { color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        footer { padding: 80px 0 40px; text-align: center; border-top: 1px solid var(--glass-border); opacity: 0.5; font-size: 0.9rem; }
+
+        @media (max-width: 1100px) {
+            .tool-row, .cafe-card { grid-template-columns: 1fr; text-align: center; gap: 50px; }
+            .tool-row:nth-child(even) { direction: ltr; }
+            .hero h1 { white-space: normal; width: auto; border-right: none; animation: none; font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mesh-bg"></div>
+
+    <div class="container">
+        <nav>
+            <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" class="logo">
+            <div class="badge">COORDENADORIA DE TECNOLOGIA DA INFORMAÇÃO</div>
+        </nav>
+
+        <header class="hero">
+            <div class="typewriter-container">
+                <h1>O futuro digital da UEMASUL.</h1>
+            </div>
+        </header>
+
+        <section class="cafe-card">
+            <div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Acesso Unificado (CAFe)</h2>
+                <p style="color: var(--text-dim); font-size: 1.2rem;">Conecte-se aos serviços da rede CAFe com sua credencial institucional.</p>
+            </div>
+            <div class="instruction-box">
+                <h4>💡 Como Acessar</h4>
+                <p>Use o mesmo <strong>usuário</strong> e <strong>senha</strong> da <span style="color: var(--secondary); font-weight: 700;">rede WI-FI da UEMASUL</span>.</p>
+            </div>
+        </section>
+
+        <div class="tool-row">
+            <div class="content">
+                <h2 style="color: var(--primary);">FileSender</h2>
+                <p>Envie arquivos de até 400GB (2TB totais) com total segurança.</p>
+                <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Ffilesender.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Ffilesender.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642298_1572" class="btn-premium" target="_blank">Acessar Arquivos</a>
+            </div>
+            <div class="visual-asset">
+                <div class="cloud-container">
+                    <div class="cloud-icon">🚀</div>
+                    <div class="upload-bar"><div class="upload-progress"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-row">
+            <div class="content">
+                <h2 style="color: var(--secondary);">Periódicos Capes</h2>
+                <p>O maior acervo científico mundial disponível para você.</p>
+                <a href="https://www-periodicos-capes-gov-br.ez418.periodicos.capes.gov.br/index.php/acesso-cafe.html" class="btn-premium" target="_blank">Iniciar Pesquisa</a>
+            </div>
+            <div class="visual-asset">
+                <div class="library-container">
+                    <div class="book-3d" style="height:160px; opacity:0.5;"></div>
+                    <div class="book-3d b2"></div>
+                    <div class="book-3d" style="height:190px; opacity:0.7;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-row">
+            <div class="content">
+                <h2 style="color: var(--accent);">Conferência Web</h2>
+                <p>Salas virtuais para aulas e reuniões sem limites.</p>
+                <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Fconferenciaweb.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Fconferenciaweb.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642646_7d99" class="btn-premium" target="_blank">Entrar na Sala</a>
+            </div>
+            <div class="visual-asset">
+                <div class="ui-screen"><div class="wave"></div></div>
+            </div>
+        </div>
+
+        <div class="tool-row">
+            <div class="content">
+                <h2 style="color: var(--eduplay);">Eduplay</h2>
+                <p>Streaming educacional com vídeos e podcasts exclusivos.</p>
+                <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Feduplay.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Feduplay.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642679_8a08" class="btn-premium" target="_blank">Explorar Media</a>
+            </div>
+            <div class="visual-asset">
+                <div class="play-sphere">▶</div>
+            </div>
+        </div>
+
+        <section class="support-section">
+            <div class="support-header">
+                <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px;">DÚVIDAS OU SUPORTE?</span>
+                <h2 style="font-size: 2.5rem; margin-top: 10px;">Estamos aqui para ajudar.</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <h3>E-mail</h3>
+                    <p>suporte.ti@uemasul.edu.br</p>
+                    <a href="mailto:suporte.ti@uemasul.edu.br" class="contact-link">Enviar E-mail</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>WhatsApp</h3>
+                    <p>(99) 9 9223-8350</p>
+                    <span style="display:block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 15px;">Apenas mensagens</span>
+                    <a href="https://wa.me/5599992238350" class="contact-link" target="_blank">Iniciar Conversa</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">🏢</div>
+                    <h3>Presencial</h3>
+                    <p>Prédio I - CTI</p>
+                    <span style="font-size: 0.8rem; color: var(--text-dim);">Atendimento das 8h às 18h</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" style="height: 35px; margin-bottom: 20px;">
+            <p>Universidade Estadual da Região Tocantina do Maranhão</p>
+            <p style="margin-top: 5px;">© 2026 UEMASUL | CTI</p>
+        </footer>
+    </div>
+
+</body>
+</html>
