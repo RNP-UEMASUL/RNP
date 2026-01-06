@@ -27,7 +27,24 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Ajuste para que o scroll não pare em cima do título */
+        /* --- BARRA DE PROGRESSO --- */
+        #scrollProgress {
+            position: fixed; top: 0; left: 0; width: 0%; height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            z-index: 2000; transition: width 0.1s;
+        }
+
+        /* --- EFEITO SPOTLIGHT --- */
+        .spotlight {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(255,255,255,0.06), transparent 40%);
+        }
+
+        /* --- REVELAÇÃO NO SCROLL --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.15, 0.45, 0.35, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
         [id] { scroll-margin-top: 40px; }
 
         .mesh-bg {
@@ -45,7 +62,6 @@
         nav { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .logo { height: 40px; }
         
-        /* NOVO MENU */
         .nav-menu { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
         .nav-link { 
             background: var(--glass); 
@@ -74,6 +90,7 @@
 
         /* --- HERO --- */
         .hero { padding: 60px 0 80px; text-align: center; }
+        .hero .greeting { color: var(--accent); font-weight: 800; font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 10px; display: block; text-transform: uppercase; }
         .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -2px; line-height: 1.1; }
 
         @media (min-width: 1024px) {
@@ -89,7 +106,62 @@
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
 
-        /* --- CARDS PRINCIPAIS --- */
+        /* --- BOTÕES CORRIGIDOS E ALINHADOS --- */
+        .btn-group { 
+            display: flex; 
+            gap: 16px; 
+            flex-wrap: wrap; 
+            width: 100%;
+            align-items: center; 
+        }
+
+        .btn-premium, .btn-about { 
+            flex: 1; 
+            height: 58px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-decoration: none; 
+            border-radius: 100px; 
+            font-size: 0.85rem; 
+            transition: 0.4s; 
+            min-width: 160px;
+            box-sizing: border-box; 
+            padding: 0 30px;
+        }
+
+        .btn-premium { 
+            background: #fff; 
+            color: #000; 
+            font-weight: 800; 
+            position: relative; 
+            overflow: hidden; 
+            border: 1px solid #fff; 
+        }
+
+        .btn-premium::after {
+            content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+            transform: rotate(30deg); animation: shimmer 4s infinite;
+        }
+        @keyframes shimmer { 0% { left: -60%; } 100% { left: 150%; } }
+
+        .btn-about { 
+            background: transparent; 
+            color: #fff; 
+            font-weight: 600; 
+            border: 1px solid var(--glass-border); 
+        }
+
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.15); }
+        .btn-about:hover { background: var(--glass); border-color: #fff; color: #fff; }
+
+        @media (max-width: 480px) {
+            .btn-group { flex-direction: column; }
+            .btn-premium, .btn-about { width: 100%; flex: none; }
+        }
+
+        /* --- CARDS E GRIDS --- */
         .cafe-card {
             background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
             border: 1px solid var(--glass-border);
@@ -101,13 +173,6 @@
         .instruction-box { background: rgba(0, 168, 89, 0.05); border-left: 4px solid var(--secondary); padding: 30px; border-radius: 0 20px 20px 0; }
         .instruction-box h4 { color: var(--secondary); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
 
-        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
-        .btn-premium { flex: 1; display: inline-block; padding: 18px 30px; background: #fff; color: #000; text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s; text-align: center; min-width: 140px; }
-        .btn-about { flex: 1; display: inline-block; padding: 18px 30px; background: transparent; color: #fff; text-decoration: none; border-radius: 100px; font-weight: 600; border: 1px solid var(--glass-border); transition: 0.4s; text-align: center; min-width: 140px; }
-        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.15); }
-        .btn-about:hover { background: var(--glass); border-color: #fff; }
-
-        /* --- GRID FERRAMENTAS --- */
         .tool-row { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 60px 0; border-top: 1px solid var(--glass-border); align-items: center; }
         @media (min-width: 1024px) {
             .tool-row { grid-template-columns: 1fr 1fr; gap: 100px; padding: 120px 0; }
@@ -119,7 +184,7 @@
         @media (min-width: 1024px) { .tool-row h2 { font-size: 4rem; } }
         .tool-row p { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 30px; font-weight: 300; line-height: 1.6; }
 
-        /* --- SEÇÃO RNP+ (GRID DE CARDS) --- */
+        /* --- RNP+ GRID --- */
         .rnp-plus-section { padding: 80px 0; border-top: 1px solid var(--glass-border); }
         .rnp-plus-header { text-align: center; margin-bottom: 60px; }
         .rnp-plus-header h2 { font-size: 2.5rem; margin-bottom: 15px; font-weight: 800; }
@@ -142,7 +207,6 @@
         .visual-asset { height: 320px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 32px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         @media (min-width: 1024px) { .visual-asset { height: 500px; border-radius: 48px; } }
 
-        /* Animações */
         .fs-logo-anim { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; margin-bottom: 40px; }
         .fs-plane-main { position: absolute; width: 70px; height: 70px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); filter: drop-shadow(0 0 25px var(--primary)); animation: planeSoar 4s ease-in-out infinite; z-index: 2; }
         .fs-plane-trail { position: absolute; width: 50px; height: 50px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); opacity: 0.3; filter: blur(8px); animation: trailFollow 4s ease-in-out infinite; }
@@ -175,38 +239,25 @@
 
         /* --- VOLTAR AO TOPO --- */
         #backToTop {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); color: #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none;
-            font-size: 1.2rem;
+            text-decoration: none; font-size: 1.2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         #backToTop.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-        #backToTop:not(.visible) { transform: translateY(20px); }
         #backToTop:hover { background: #fff; color: #000; transform: scale(1.1) translateY(-5px); }
 
         footer { padding: 60px 0 40px; text-align: center; opacity: 0.5; font-size: 0.85rem; border-top: 1px solid var(--glass-border); }
-
     </style>
 </head>
 <body>
 
+    <div id="scrollProgress"></div>
+    <div class="spotlight"></div>
     <div class="mesh-bg"></div>
 
     <div class="container">
@@ -224,10 +275,11 @@
         </nav>
 
         <header class="hero">
+            <span class="greeting" id="dynamicGreeting">Iniciando sistema...</span>
             <h1>O futuro digital da UEMASUL.</h1>
         </header>
 
-        <section id="cafe" class="cafe-card">
+        <section id="cafe" class="cafe-card reveal">
             <div>
                 <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Acesso Unificado (CAFe)</h2>
                 <p style="color: var(--text-dim); font-size: 1.15rem;">Uma única senha. Um mundo de possibilidades acadêmicas através da rede CAFe.</p>
@@ -238,7 +290,7 @@
             </div>
         </section>
 
-        <div id="filesender" class="tool-row">
+        <div id="filesender" class="tool-row reveal">
             <div class="content">
                 <h2 style="color: var(--primary);">FileSender</h2>
                 <p>Envie arquivos de até 400GB (2TB totais) com a segurança e velocidade da rede nacional de pesquisa.</p>
@@ -256,7 +308,7 @@
             </div>
         </div>
 
-        <div id="capes" class="tool-row">
+        <div id="capes" class="tool-row reveal">
             <div class="content">
                 <h2 style="color: var(--secondary);">Periódicos Capes</h2>
                 <p>Explore o portal da CAPES. Milhares de artigos científicos internacionais ao seu alcance.</p>
@@ -274,7 +326,7 @@
             </div>
         </div>
 
-        <div id="conferencia" class="tool-row">
+        <div id="conferencia" class="tool-row reveal">
             <div class="content">
                 <h2 style="color: var(--accent);">Conferência Web</h2>
                 <p>Salas de reuniões estáveis para aulas, bancas e colaboração em tempo real.</p>
@@ -288,7 +340,7 @@
             </div>
         </div>
 
-        <div id="eduplay" class="tool-row">
+        <div id="eduplay" class="tool-row reveal">
             <div class="content">
                 <h2 style="color: var(--eduplay);">Eduplay</h2>
                 <p>O streaming educacional da RNP. Vídeos e podcasts feitos para a educação brasileira.</p>
@@ -302,46 +354,45 @@
             </div>
         </div>
 
-        <section id="rnp-plus" class="rnp-plus-section">
+        <section id="rnp-plus" class="rnp-plus-section reveal">
             <div class="rnp-plus-header">
                 <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase;">Parcerias de Software</span>
                 <h2>Ecossistema RNP+</h2>
-                <p>Recursos fundamentais para colaboração acadêmica e desenvolvimento tecnológico. Softwares profissionais disponibilizados gratuitamente via RNP.</p>
+                <p>Recursos fundamentais para colaboração acadêmica e desenvolvimento tecnológico.</p>
             </div>
-
             <div class="tools-grid">
                 <div class="tool-card">
-                    <div><span class="tool-card-icon">🧠</span><h3>Wolfram Cloud</h3><p>Computação técnica baseada em nuvem para análise de dados e visualizações sem instalação local.</p></div>
+                    <div><span class="tool-card-icon">🧠</span><h3>Wolfram Cloud</h3><p>Análise de dados e computação em nuvem.</p></div>
                     <a href="https://www.wolframcloud.com" class="btn-small" target="_blank">Acessar</a>
                 </div>
                 <div class="tool-card">
-                    <div><span class="tool-card-icon">📊</span><h3>Alteryx</h3><p>Plataforma unificada que democratiza a análise de dados com automação e interface Drag-and-Drop.</p></div>
+                    <div><span class="tool-card-icon">📊</span><h3>Alteryx</h3><p>Automação e democratização de dados.</p></div>
                     <a href="https://rnpmais.rnp.br/alteryx#adquira" class="btn-small" target="_blank">Solicitar</a>
                 </div>
                 <div class="tool-card">
-                    <div><span class="tool-card-icon">🏗️</span><h3>AutoDesk</h3><p>Líder mundial em projetos 2D/3D (AutoCAD, Revit). Licenças renováveis para estudantes.</p></div>
+                    <div><span class="tool-card-icon">🏗️</span><h3>AutoDesk</h3><p>Projetos 2D/3D (AutoCAD, Revit).</p></div>
                     <a href="https://rnpmais.rnp.br/autodesk" class="btn-small" target="_blank">Solicitar</a>
                 </div>
                 <div class="tool-card">
-                    <div><span class="tool-card-icon">🔍</span><h3>Perplexity Pro</h3><p>Busca com IA que prioriza a veracidade e cita as fontes originais em tempo real.</p></div>
+                    <div><span class="tool-card-icon">🔍</span><h3>Perplexity Pro</h3><p>Busca com IA e fontes citadas.</p></div>
                     <a href="https://rnpmais.rnp.br/perplexity-pro" class="btn-small" target="_blank">Acessar</a>
                 </div>
                 <div class="tool-card">
-                    <div><span class="tool-card-icon">📈</span><h3>Tableau</h3><p>Visualização de dados para dashboards interativos e comunicação de resultados científicos.</p></div>
+                    <div><span class="tool-card-icon">📈</span><h3>Tableau</h3><p>Dashboards interativos de dados.</p></div>
                     <a href="https://rnpmais.rnp.br/tableau" class="btn-small" target="_blank">Acessar</a>
                 </div>
                 <div class="tool-card">
-                    <div><span class="tool-card-icon">🎮</span><h3>Unity</h3><p>Desenvolvimento 3D e Realidade Virtual (VR). Essencial para simulações e ambientes imersivos.</p></div>
+                    <div><span class="tool-card-icon">🎮</span><h3>Unity</h3><p>Desenvolvimento 3D e VR acadêmico.</p></div>
                     <a href="https://rnpmais.rnp.br/unity" class="btn-small" target="_blank">Acessar</a>
                 </div>
                 <div class="tool-card">
-                    <div><span class="tool-card-icon">📐</span><h3>VectorWorks</h3><p>Software BIM para arquitetura e paisagismo. Integra desenho 2D e modelagem 3D.</p></div>
+                    <div><span class="tool-card-icon">📐</span><h3>VectorWorks</h3><p>BIM para arquitetura e paisagismo.</p></div>
                     <a href="https://rnpmais.rnp.br/vectorworks" class="btn-small" target="_blank">Acessar</a>
                 </div>
             </div>
         </section>
 
-        <section id="contato" class="support-section">
+        <section id="contato" class="support-section reveal">
             <div style="text-align: center;">
                 <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px; font-size: 0.8rem;">DÚVIDAS OU PROBLEMAS?</span>
                 <h2 style="font-size: 2.2rem; margin-top: 10px;">Entre em contato</h2>
@@ -362,7 +413,7 @@
                 <div class="contact-card">
                     <span class="contact-icon">🏢</span>
                     <h3>Prédio I</h3>
-                    <p>Coordenadoria de Tecnologia da Informação</p>
+                    <p>Coordenadoria de TI</p>
                     <span style="font-size: 0.75rem; color: var(--text-dim);">08h às 18h</span>
                 </div>
             </div>
@@ -377,21 +428,54 @@
     <a href="#" id="backToTop" title="Voltar ao topo">↑</a>
 
     <script>
+        // SPOTLIGHT
+        window.addEventListener('mousemove', e => {
+            document.body.style.setProperty('--x', e.clientX + 'px');
+            document.body.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        // PROGRESS E REVEAL ON SCROLL
         const btnTop = document.getElementById("backToTop");
+        const scrollBar = document.getElementById("scrollProgress");
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
 
         window.onscroll = function() {
-            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-                btnTop.classList.add("visible");
-            } else {
-                btnTop.classList.remove("visible");
-            }
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            scrollBar.style.width = scrolled + "%";
+
+            if (winScroll > 400) btnTop.classList.add("visible");
+            else btnTop.classList.remove("visible");
+
+            reveal();
         };
 
-        btnTop.onclick = function(e) {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        // GREETING
+        function updateGreeting() {
+            const now = new Date();
+            const hours = now.getHours();
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            const dateStr = now.toLocaleDateString('pt-BR', options);
+            let greeting = hours >= 5 && hours < 12 ? "Bom dia" : hours >= 12 && hours < 18 ? "Boa tarde" : "Boa noite";
+            document.getElementById('dynamicGreeting').innerText = `${greeting} • ${dateStr}`;
+        }
+        
+        updateGreeting();
+        reveal();
+
+        btnTop.onclick = e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
     </script>
-
 </body>
 </html>
