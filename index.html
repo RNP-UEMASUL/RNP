@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UEMASUL | Ferrametas Digitais</title>
+    <title>UEMASUL | Ferramentas Digitais</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIÁVEIS DE TEMA (MODO ESCURO - PADRÃO) --- */
+        /* --- VARIÁVEIS DE TEMA (MODO CLARO - AGORA PADRÃO) --- */
         :root {
-        body.light-mode {
             --bg: #ffffff;
             --primary: #004a99;
             --secondary: #00a859;
@@ -19,12 +18,15 @@
             --text-main: #1e293b;
             --text-dim: #64748b;
             --spotlight-color: rgba(0, 74, 153, 0.08);
-            --header-bg: rgba(255, 255, 255, 0.9); /* Fundo do menu claro */
-
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --btn-premium-bg: var(--primary);
+            --btn-premium-text: #fff;
+            --fs-plane: var(--primary);
+            --fs-trail-opacity: 0.2;
         }
 
-        /* --- MODO CLARO --- */
-        body.light-mode {
+        /* --- MODO ESCURO (CLASSE OPCIONAL) --- */
+        body.dark-mode {
             --bg: #030712;
             --primary: #004a99;
             --secondary: #00a859;
@@ -35,7 +37,11 @@
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
             --spotlight-color: rgba(255, 255, 255, 0.06);
-            --header-bg: rgba(3, 7, 18, 0.85); /* Fundo do menu escuro */
+            --header-bg: rgba(3, 7, 18, 0.85);
+            --btn-premium-bg: #fff;
+            --btn-premium-text: #000;
+            --fs-plane: var(--primary);
+            --fs-trail-opacity: 0.3;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -47,14 +53,20 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             transition: background-color 0.4s ease, color 0.4s ease;
-            
-            /* IMPEDIR QUE O CONTEÚDO FIQUE EMBAIXO DO MENU FIXO */
             padding-top: 100px; 
         }
 
-        /* Ajuste para logos no modo claro */
-        .logo, footer img { transition: filter 0.4s ease; }
-        body.light-mode .logo, body.light-mode footer img { filter: invert(1) brightness(0.2); }
+        /* --- AJUSTE DE LOGOS --- */
+        /* No modo claro (padrão), invertemos o logo branco para preto */
+        .logo, footer img { 
+            transition: filter 0.4s ease; 
+            filter: invert(1) brightness(0.2); 
+        }
+        
+        /* No modo escuro, removemos o filtro para o logo voltar a ser branco */
+        body.dark-mode .logo, body.dark-mode footer img { 
+            filter: none; 
+        }
 
         /* --- BARRA DE PROGRESSO --- */
         #scrollProgress {
@@ -63,22 +75,12 @@
             z-index: 2000; transition: width 0.1s;
         }
 
-        /* --- MENU FIXO (O NOVO HEADER) --- */
+        /* --- MENU FIXO --- */
         .main-header {
-            position: fixed; /* Fixa no topo */
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 80px; /* Altura fixa */
-            z-index: 1000; /* Garante que fique acima dos outros elementos */
-            
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 0 5%; /* Espaçamento lateral */
-            
-            background: var(--header-bg); /* Usa a variável de cor */
-            backdrop-filter: blur(12px); /* Efeito de vidro */
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 5%;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border);
             transition: background 0.4s ease, border-color 0.4s ease;
         }
@@ -88,28 +90,18 @@
         .nav-menu { display: flex; gap: 8px; flex-wrap: nowrap; align-items: center; }
 
         .nav-link { 
-            padding: 8px 16px; 
-            border-radius: 50px; 
-            font-size: 0.7rem; 
-            font-weight: 700; 
-            letter-spacing: 0.5px; 
-            color: var(--text-dim); 
-            text-transform: uppercase; 
-            text-decoration: none; 
-            transition: 0.3s ease;
-            border: 1px solid transparent;
+            padding: 8px 16px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; 
+            letter-spacing: 0.5px; color: var(--text-dim); text-transform: uppercase; 
+            text-decoration: none; transition: 0.3s ease; border: 1px solid transparent;
         }
         
         .nav-link:hover { 
-            background: var(--glass); 
-            color: var(--text-main); 
-            border-color: var(--glass-border);
+            background: var(--glass); color: var(--text-main); border-color: var(--glass-border);
         }
 
-        /* Ocultar itens do menu em telas muito pequenas para não quebrar */
         @media (max-width: 900px) {
-            .nav-link { display: none; } /* Em um cenário real, usaria um menu hambúrguer */
-            .nav-link:last-child { display: block; } /* Mantém botão de tema visível */
+            .nav-link { display: none; }
+            .nav-link:last-child { display: block; }
         }
 
         /* Botão de Tema */
@@ -121,24 +113,19 @@
         }
         .theme-toggle:hover { transform: scale(1.1); background: var(--glass-border); }
 
-
-        /* --- EFEITO SPOTLIGHT --- */
+        /* --- BACKGROUND FX --- */
         .spotlight {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;
             background: radial-gradient(600px circle at var(--x) var(--y), var(--spotlight-color), transparent 40%);
         }
 
-        /* --- REVELAÇÃO NO SCROLL --- */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.15, 0.45, 0.35, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        [id] { scroll-margin-top: 100px; /* Compensa a altura do menu fixo ao clicar nos links */ }
+        [id] { scroll-margin-top: 100px; }
 
         .mesh-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: 
                 radial-gradient(circle at 10% 10%, rgba(0, 74, 153, 0.12) 0%, transparent 40%),
                 radial-gradient(circle at 90% 90%, rgba(0, 168, 89, 0.1) 0%, transparent 40%);
@@ -154,10 +141,9 @@
         @media (min-width: 1024px) {
             .hero { padding: 100px 0 120px; }
             .hero h1 { 
-                font-size: 5.5rem; letter-spacing: -4px;
+                font-size: 5.5rem; letter-spacing: -4px; margin: 0 auto;
                 white-space: nowrap; overflow: hidden; width: 0;
                 border-right: .15em solid var(--accent);
-                margin: 0 auto;
                 animation: typing 3.5s steps(30, end) forwards, blink-caret .75s step-end infinite;
             }
         }
@@ -174,9 +160,9 @@
         }
 
         .btn-premium { 
-            background: #fff; color: #000; font-weight: 800; position: relative; overflow: hidden; border: 1px solid #fff; 
+            background: var(--btn-premium-bg); color: var(--btn-premium-text); 
+            font-weight: 800; position: relative; overflow: hidden; border: 1px solid transparent; 
         }
-        body.light-mode .btn-premium { background: var(--primary); color: #fff; border-color: var(--primary); }
 
         .btn-premium::after {
             content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
@@ -187,8 +173,7 @@
 
         .btn-about { background: transparent; color: var(--text-main); font-weight: 600; border: 1px solid var(--glass-border); }
         .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
-        .btn-about:hover { background: var(--glass); border-color: var(--text-main); color: var(--text-main); }
-        body.light-mode .btn-about:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-about:hover { background: var(--glass); border-color: var(--primary); color: var(--primary); }
 
         @media (max-width: 480px) {
             .btn-group { flex-direction: column; }
@@ -240,14 +225,16 @@
         .visual-asset { height: 320px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 32px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         @media (min-width: 1024px) { .visual-asset { height: 500px; border-radius: 48px; } }
 
-        /* Animações (FileSender, Livros, WebConf, Eduplay) */
+        /* Animações */
         .fs-logo-anim { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; margin-bottom: 40px; }
-        .fs-plane-main { position: absolute; width: 70px; height: 70px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); filter: drop-shadow(0 0 25px var(--primary)); animation: planeSoar 4s ease-in-out infinite; z-index: 2; }
-        .fs-plane-trail { position: absolute; width: 50px; height: 50px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); opacity: 0.3; filter: blur(8px); animation: trailFollow 4s ease-in-out infinite; }
+        .fs-plane-main { position: absolute; width: 70px; height: 70px; background: var(--fs-plane); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); filter: drop-shadow(0 0 25px var(--fs-plane)); animation: planeSoar 4s ease-in-out infinite; z-index: 2; }
+        .fs-plane-trail { position: absolute; width: 50px; height: 50px; background: var(--fs-plane); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); opacity: var(--fs-trail-opacity); filter: blur(8px); animation: trailFollow 4s ease-in-out infinite; }
+        
         @keyframes planeSoar { 0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); } 25% { transform: translate(25px, -35px) rotate(20deg) scale(1.1); } 50% { transform: translate(0, -15px) rotate(0deg) scale(1); } 75% { transform: translate(-25px, -35px) rotate(-20deg) scale(1.1); } }
         @keyframes trailFollow { 0%, 100% { transform: translate(-15px, 20px) scale(0.8) rotate(0deg); opacity: 0.2; } 50% { transform: translate(-15px, 10px) scale(0.8) rotate(0deg); opacity: 0.2; } }
-        .upload-bar-fs { width: 140px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        body.light-mode .upload-bar-fs { background: rgba(0,0,0,0.1); }
+        
+        .upload-bar-fs { width: 140px; height: 6px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; }
+        body.dark-mode .upload-bar-fs { background: rgba(255,255,255,0.1); }
         .upload-progress-fs { width: 40%; height: 100%; background: var(--primary); animation: loading 2s infinite ease-in-out; }
         @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
 
@@ -275,18 +262,19 @@
         /* --- VOLTAR AO TOPO --- */
         #backToTop {
             position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-            background: var(--glass); backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 50%;
+            background: var(--primary); color: #fff; 
+            border: 1px solid var(--glass-border); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none; font-size: 1.2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        body.light-mode #backToTop { background: var(--primary); color: #fff; }
+        body.dark-mode #backToTop { background: var(--glass); backdrop-filter: blur(10px); color: var(--text-main); }
+        
         #backToTop.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-        #backToTop:hover { background: #fff; color: #000; transform: scale(1.1) translateY(-5px); }
-        body.light-mode #backToTop:hover { background: var(--accent); }
+        #backToTop:hover { background: var(--accent); color: #fff; transform: scale(1.1) translateY(-5px); }
+        body.dark-mode #backToTop:hover { background: #fff; color: #000; }
 
         footer { padding: 60px 0 40px; text-align: center; opacity: 0.5; font-size: 0.85rem; border-top: 1px solid var(--glass-border); }
     </style>
@@ -311,7 +299,7 @@
             <a href="#rnp-plus" class="nav-link">RNP+</a>
             <a href="#contato" class="nav-link">Suporte</a>
             
-            <button class="theme-toggle" id="themeBtn" title="Alternar Tema">🌓</button>
+            <button class="theme-toggle" id="themeBtn" title="Alternar Tema">☀️</button>
         </div>
     </nav>
 
@@ -451,7 +439,7 @@
                     <span class="contact-icon">📱</span>
                     <h3>WhatsApp</h3>
                     <p>(99) 9 9223-8350</p>
-                    <a href="https://wa.me/559992238350?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20o%20Suporte%20de%20TI%20da%20UEMASUL.%20" class="contact-link" target="_blank">Iniciar Conversa</a>
+                    <a href="https://wa.me/5599992238350" class="contact-link" target="_blank">Iniciar Conversa</a>
                 </div>
                 <div class="contact-card">
                     <span class="contact-icon">🏢</span>
@@ -471,21 +459,28 @@
     <a href="#" id="backToTop" title="Voltar ao topo">↑</a>
 
     <script>
-        // --- LÓGICA DE TEMA (MODO CLARO/ESCURO) ---
+        // --- LÓGICA DE TEMA (MODO CLARO PADRÃO / MODO ESCURO OPCIONAL) ---
         const body = document.body;
         const themeBtn = document.getElementById('themeBtn');
         
-        // Verifica se há preferência salva
-        if (localStorage.getItem('theme') === 'light') {
-            body.classList.add('light-mode');
-            themeBtn.innerText = '☀️';
+        // Verifica se há preferência por MODO ESCURO salva
+        // Se a pessoa nunca acessou, é null, então cai no else (Claro/Padrão)
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeBtn.innerText = '🌓'; // Lua para indicar que está escuro
+        } else {
+            themeBtn.innerText = '☀️'; // Sol para indicar que está claro
         }
 
         themeBtn.onclick = () => {
-            body.classList.toggle('light-mode');
-            const isLight = body.classList.contains('light-mode');
-            themeBtn.innerText = isLight ? '☀️' : '🌓';
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            
+            // Troca o ícone
+            themeBtn.innerText = isDark ? '🌓' : '☀️';
+            
+            // Salva a preferência
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         };
 
         // SPOTLIGHT
