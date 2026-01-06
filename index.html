@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UEMASUL | RNP</title>
+    <title>UEMASUL | Hub Digital de Elite</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* --- VARIÁVEIS DE TEMA (MODO ESCURO - PADRÃO) --- */
         :root {
             --bg: #030712;
             --primary: #004a99;
@@ -16,16 +17,37 @@
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
+            --spotlight-color: rgba(255, 255, 255, 0.06);
+        }
+
+        /* --- MODO CLARO (ADICIONADO) --- */
+        body.light-mode {
+            --bg: #ffffff;
+            --primary: #004a99;
+            --secondary: #00a859;
+            --accent: #d6951b; /* Um pouco mais escuro para contraste no branco */
+            --eduplay: #d6303f;
+            --glass: rgba(0, 74, 153, 0.05); /* Leve tom azulado */
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-main: #1e293b;
+            --text-dim: #64748b;
+            --spotlight-color: rgba(0, 74, 153, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: var(--bg); 
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
+
+        /* Ajuste para logos no modo claro para ficarem visíveis */
+        .logo, footer img { transition: filter 0.4s ease; }
+        body.light-mode .logo, body.light-mode footer img { filter: invert(1) brightness(0.2); }
 
         /* --- BARRA DE PROGRESSO --- */
         #scrollProgress {
@@ -38,7 +60,7 @@
         .spotlight {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: -1;
-            background: radial-gradient(600px circle at var(--x) var(--y), rgba(255,255,255,0.06), transparent 40%);
+            background: radial-gradient(600px circle at var(--x) var(--y), var(--spotlight-color), transparent 40%);
         }
 
         /* --- REVELAÇÃO NO SCROLL --- */
@@ -62,7 +84,7 @@
         nav { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .logo { height: 40px; }
         
-        .nav-menu { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+        .nav-menu { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
         .nav-link { 
             background: var(--glass); 
             border: 1px solid var(--glass-border); 
@@ -77,11 +99,20 @@
             transition: 0.3s ease;
         }
         .nav-link:hover { 
-            background: rgba(255,255,255,0.1); 
+            background: var(--primary); 
             color: #fff; 
-            border-color: var(--accent); 
+            border-color: var(--primary); 
             transform: translateY(-2px);
         }
+
+        /* Botão de Tema */
+        .theme-toggle {
+            background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-main);
+            width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: 0.3s;
+            margin-left: 5px;
+        }
+        .theme-toggle:hover { transform: scale(1.1); background: var(--glass-border); }
 
         @media (max-width: 768px) {
             nav { justify-content: center; text-align: center; }
@@ -106,7 +137,7 @@
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
 
-        /* --- BOTÕES CORRIGIDOS E ALINHADOS --- */
+        /* --- BOTÕES --- */
         .btn-group { 
             display: flex; 
             gap: 16px; 
@@ -138,6 +169,13 @@
             overflow: hidden; 
             border: 1px solid #fff; 
         }
+        
+        /* Ajuste do botão premium no modo claro para ter contraste */
+        body.light-mode .btn-premium {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
 
         .btn-premium::after {
             content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
@@ -148,13 +186,16 @@
 
         .btn-about { 
             background: transparent; 
-            color: #fff; 
+            color: var(--text-main); 
             font-weight: 600; 
             border: 1px solid var(--glass-border); 
         }
 
-        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.15); }
-        .btn-about:hover { background: var(--glass); border-color: #fff; color: #fff; }
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        
+        /* Ajuste hover btn-about */
+        .btn-about:hover { background: var(--glass); border-color: var(--text-main); color: var(--text-main); }
+        body.light-mode .btn-about:hover { border-color: var(--primary); color: var(--primary); }
 
         @media (max-width: 480px) {
             .btn-group { flex-direction: column; }
@@ -163,7 +204,7 @@
 
         /* --- CARDS E GRIDS --- */
         .cafe-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            background: var(--glass);
             border: 1px solid var(--glass-border);
             border-radius: 32px; padding: 32px; display: grid; gap: 40px;
             margin-bottom: 80px; backdrop-filter: blur(20px);
@@ -195,13 +236,13 @@
             background: var(--glass); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; 
             transition: 0.4s; display: flex; flex-direction: column; justify-content: space-between; backdrop-filter: blur(10px);
         }
-        .tool-card:hover { background: rgba(255, 255, 255, 0.07); transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.2); }
+        .tool-card:hover { background: var(--glass); transform: translateY(-5px); border-color: var(--primary); }
         .tool-card-icon { font-size: 1.8rem; margin-bottom: 15px; display: block; }
-        .tool-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #fff; }
+        .tool-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: var(--text-main); }
         .tool-card p { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px; line-height: 1.5; flex-grow: 1; }
         
-        .btn-small { padding: 12px; border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 700; text-align: center; transition: 0.3s; background: rgba(255,255,255,0.03); }
-        .btn-small:hover { background: #fff; color: #000; }
+        .btn-small { padding: 12px; border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-align: center; transition: 0.3s; background: rgba(255,255,255,0.03); }
+        .btn-small:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
         /* --- ASSETS VISUAIS --- */
         .visual-asset { height: 320px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 32px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -213,6 +254,7 @@
         @keyframes planeSoar { 0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); } 25% { transform: translate(25px, -35px) rotate(20deg) scale(1.1); } 50% { transform: translate(0, -15px) rotate(0deg) scale(1); } 75% { transform: translate(-25px, -35px) rotate(-20deg) scale(1.1); } }
         @keyframes trailFollow { 0%, 100% { transform: translate(-15px, 20px) scale(0.8) rotate(0deg); opacity: 0.2; } 50% { transform: translate(-15px, 10px) scale(0.8) rotate(0deg); opacity: 0.2; } }
         .upload-bar-fs { width: 140px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+        body.light-mode .upload-bar-fs { background: rgba(0,0,0,0.1); } /* Ajuste barra loading claro */
         .upload-progress-fs { width: 40%; height: 100%; background: var(--primary); animation: loading 2s infinite ease-in-out; }
         @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
 
@@ -221,11 +263,11 @@
         .b2 { height: 200px; animation: bookFloat 4s infinite ease-in-out; box-shadow: 0 20px 40px rgba(0,168,89,0.2); }
         @keyframes bookFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .ui-screen { width: 280px; height: 160px; background: rgba(255,255,255,0.03); border: 2px solid var(--accent); border-radius: 20px; position: relative; overflow: hidden; }
+        .ui-screen { width: 280px; height: 160px; background: var(--glass); border: 2px solid var(--accent); border-radius: 20px; position: relative; overflow: hidden; }
         .wave { position: absolute; width: 100%; height: 2px; background: var(--accent); top: 50%; opacity: 0.3; animation: scan 3s infinite linear; }
         @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
 
-        .play-sphere { width: 110px; height: 110px; background: var(--eduplay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulseSphere 2s infinite; }
+        .play-sphere { width: 110px; height: 110px; background: var(--eduplay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulseSphere 2s infinite; color: #fff; }
         @keyframes pulseSphere { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         /* --- SUPORTE --- */
@@ -240,16 +282,18 @@
         /* --- VOLTAR AO TOPO --- */
         #backToTop {
             position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); color: #fff; border-radius: 50%;
+            background: var(--glass); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none; font-size: 1.2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
+        body.light-mode #backToTop { background: var(--primary); color: #fff; }
         #backToTop.visible { opacity: 1; visibility: visible; transform: translateY(0); }
         #backToTop:hover { background: #fff; color: #000; transform: scale(1.1) translateY(-5px); }
+        body.light-mode #backToTop:hover { background: var(--accent); }
 
         footer { padding: 60px 0 40px; text-align: center; opacity: 0.5; font-size: 0.85rem; border-top: 1px solid var(--glass-border); }
     </style>
@@ -271,6 +315,7 @@
                 <a href="#eduplay" class="nav-link">Eduplay</a>
                 <a href="#rnp-plus" class="nav-link">RNP+</a>
                 <a href="#contato" class="nav-link">Suporte</a>
+                <button class="theme-toggle" id="themeBtn" title="Alternar Tema">🌓</button>
             </div>
         </nav>
 
@@ -428,6 +473,24 @@
     <a href="#" id="backToTop" title="Voltar ao topo">↑</a>
 
     <script>
+        // --- LÓGICA DE TEMA (MODO CLARO/ESCURO) ---
+        const body = document.body;
+        const themeBtn = document.getElementById('themeBtn');
+        
+        // Verifica se há preferência salva
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-mode');
+            themeBtn.innerText = '☀️';
+        }
+
+        themeBtn.onclick = () => {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            themeBtn.innerText = isLight ? '☀️' : '🌓';
+            // Salva a preferência
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        };
+
         // SPOTLIGHT
         window.addEventListener('mousemove', e => {
             document.body.style.setProperty('--x', e.clientX + 'px');
