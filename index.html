@@ -38,27 +38,10 @@
 
         .container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 24px; }
 
-        /* --- NAVEGAÇÃO (Ajustada para não bugar no celular) --- */
-        nav { 
-            padding: 30px 0; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-wrap: wrap; 
-            gap: 15px;
-        }
+        /* --- NAVEGAÇÃO --- */
+        nav { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .logo { height: 40px; }
-        .badge { 
-            background: var(--glass); 
-            border: 1px solid var(--glass-border); 
-            padding: 6px 12px; 
-            border-radius: 100px; 
-            font-size: 0.65rem; 
-            font-weight: 800; 
-            letter-spacing: 2px; 
-            color: var(--text-dim);
-            text-transform: uppercase;
-        }
+        .badge { background: var(--glass); border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 100px; font-size: 0.65rem; font-weight: 800; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; }
 
         @media (max-width: 768px) {
             nav { justify-content: center; text-align: center; }
@@ -72,11 +55,8 @@
         @media (min-width: 1024px) {
             .hero { padding: 100px 0 120px; }
             .hero h1 { 
-                font-size: 5.5rem; 
-                letter-spacing: -4px;
-                white-space: nowrap;
-                overflow: hidden;
-                width: 0;
+                font-size: 5.5rem; letter-spacing: -4px;
+                white-space: nowrap; overflow: hidden; width: 0;
                 border-right: .15em solid var(--accent);
                 margin: 0 auto;
                 animation: typing 3.5s steps(30, end) forwards, blink-caret .75s step-end infinite;
@@ -85,47 +65,23 @@
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
 
-        /* --- CARDS --- */
+        /* --- CARDS PRINCIPAIS --- */
         .cafe-card {
             background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
             border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 32px;
-            display: grid;
-            gap: 40px;
-            margin-bottom: 80px;
-            backdrop-filter: blur(20px);
+            border-radius: 32px; padding: 32px; display: grid; gap: 40px;
+            margin-bottom: 80px; backdrop-filter: blur(20px);
         }
         @media (min-width: 1024px) { .cafe-card { grid-template-columns: 1fr 1fr; padding: 60px; gap: 80px; } }
 
         .instruction-box { background: rgba(0, 168, 89, 0.05); border-left: 4px solid var(--secondary); padding: 30px; border-radius: 0 20px 20px 0; }
         .instruction-box h4 { color: var(--secondary); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
 
-        /* --- BOTÕES (SISTEMA DE DUPLA OPÇÃO) --- */
         .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
-        
-        .btn-premium {
-            flex: 1;
-            display: inline-block; padding: 18px 30px; background: #fff; color: #000;
-            text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s;
-            text-align: center; min-width: 140px;
-        }
-
-        .btn-about {
-            flex: 1;
-            display: inline-block; padding: 18px 30px; background: transparent; color: #fff;
-            text-decoration: none; border-radius: 100px; font-weight: 600; 
-            border: 1px solid var(--glass-border); transition: 0.4s;
-            text-align: center; min-width: 140px;
-        }
-
+        .btn-premium { flex: 1; display: inline-block; padding: 18px 30px; background: #fff; color: #000; text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s; text-align: center; min-width: 140px; }
+        .btn-about { flex: 1; display: inline-block; padding: 18px 30px; background: transparent; color: #fff; text-decoration: none; border-radius: 100px; font-weight: 600; border: 1px solid var(--glass-border); transition: 0.4s; text-align: center; min-width: 140px; }
         .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.15); }
         .btn-about:hover { background: var(--glass); border-color: #fff; }
-
-        @media (max-width: 480px) {
-            .btn-group { flex-direction: column; }
-            .btn-premium, .btn-about { width: 100%; }
-        }
 
         /* --- GRID FERRAMENTAS --- */
         .tool-row { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 60px 0; border-top: 1px solid var(--glass-border); align-items: center; }
@@ -139,11 +95,30 @@
         @media (min-width: 1024px) { .tool-row h2 { font-size: 4rem; } }
         .tool-row p { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 30px; font-weight: 300; line-height: 1.6; }
 
+        /* --- SEÇÃO RNP+ (GRID DE CARDS) --- */
+        .rnp-plus-section { padding: 80px 0; border-top: 1px solid var(--glass-border); }
+        .rnp-plus-header { text-align: center; margin-bottom: 60px; }
+        .rnp-plus-header h2 { font-size: 2.5rem; margin-bottom: 15px; font-weight: 800; }
+        .rnp-plus-header p { color: var(--text-dim); max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .tool-card { 
+            background: var(--glass); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; 
+            transition: 0.4s; display: flex; flex-direction: column; justify-content: space-between; backdrop-filter: blur(10px);
+        }
+        .tool-card:hover { background: rgba(255, 255, 255, 0.07); transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.2); }
+        .tool-card-icon { font-size: 1.8rem; margin-bottom: 15px; display: block; }
+        .tool-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #fff; }
+        .tool-card p { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px; line-height: 1.5; flex-grow: 1; }
+        
+        .btn-small { padding: 12px; border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 700; text-align: center; transition: 0.3s; background: rgba(255,255,255,0.03); }
+        .btn-small:hover { background: #fff; color: #000; }
+
         /* --- ASSETS VISUAIS --- */
         .visual-asset { height: 320px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 32px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         @media (min-width: 1024px) { .visual-asset { height: 500px; border-radius: 48px; } }
 
-        /* Animações mantidas */
+        /* Animações */
         .fs-logo-anim { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; margin-bottom: 40px; }
         .fs-plane-main { position: absolute; width: 70px; height: 70px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); filter: drop-shadow(0 0 25px var(--primary)); animation: planeSoar 4s ease-in-out infinite; z-index: 2; }
         .fs-plane-trail { position: absolute; width: 50px; height: 50px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); opacity: 0.3; filter: blur(8px); animation: trailFollow 4s ease-in-out infinite; }
@@ -173,6 +148,34 @@
         .contact-card:hover { border-color: var(--accent); transform: translateY(-8px); }
         .contact-icon { font-size: 2.2rem; margin-bottom: 20px; display: block; }
         .contact-link { color: var(--accent); text-decoration: none; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- VOLTAR AO TOPO --- */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        #backToTop.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        #backToTop:not(.visible) { transform: translateY(20px); }
+        #backToTop:hover { background: #fff; color: #000; transform: scale(1.1) translateY(-5px); }
 
         footer { padding: 60px 0 40px; text-align: center; opacity: 0.5; font-size: 0.85rem; border-top: 1px solid var(--glass-border); }
 
@@ -267,6 +270,45 @@
             </div>
         </div>
 
+        <section class="rnp-plus-section">
+            <div class="rnp-plus-header">
+                <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px; font-size: 0.75rem; text-transform: uppercase;">Parcerias de Software</span>
+                <h2>Ecossistema RNP+</h2>
+                <p>Recursos fundamentais para colaboração acadêmica e desenvolvimento tecnológico. Softwares profissionais disponibilizados gratuitamente via RNP.</p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div><span class="tool-card-icon">🧠</span><h3>Wolfram Cloud</h3><p>Computação técnica baseada em nuvem para análise de dados e visualizações sem instalação local.</p></div>
+                    <a href="https://www.wolframcloud.com" class="btn-small" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-card">
+                    <div><span class="tool-card-icon">📊</span><h3>Alteryx</h3><p>Plataforma unificada que democratiza a análise de dados com automação e interface Drag-and-Drop.</p></div>
+                    <a href="https://rnpmais.rnp.br/alteryx#adquira" class="btn-small" target="_blank">Solicitar</a>
+                </div>
+                <div class="tool-card">
+                    <div><span class="tool-card-icon">🏗️</span><h3>AutoDesk</h3><p>Líder mundial em projetos 2D/3D (AutoCAD, Revit). Licenças renováveis para estudantes.</p></div>
+                    <a href="https://rnpmais.rnp.br/autodesk" class="btn-small" target="_blank">Solicitar</a>
+                </div>
+                <div class="tool-card">
+                    <div><span class="tool-card-icon">🔍</span><h3>Perplexity Pro</h3><p>Busca com IA que prioriza a veracidade e cita as fontes originais em tempo real.</p></div>
+                    <a href="https://rnpmais.rnp.br/perplexity-pro" class="btn-small" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-card">
+                    <div><span class="tool-card-icon">📈</span><h3>Tableau</h3><p>Visualização de dados para dashboards interativos e comunicação de resultados científicos.</p></div>
+                    <a href="https://rnpmais.rnp.br/tableau" class="btn-small" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-card">
+                    <div><span class="tool-card-icon">🎮</span><h3>Unity</h3><p>Desenvolvimento 3D e Realidade Virtual (VR). Essencial para simulações e ambientes imersivos.</p></div>
+                    <a href="https://rnpmais.rnp.br/unity" class="btn-small" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-card">
+                    <div><span class="tool-card-icon">📐</span><h3>VectorWorks</h3><p>Software BIM para arquitetura e paisagismo. Integra desenho 2D e modelagem 3D.</p></div>
+                    <a href="https://rnpmais.rnp.br/vectorworks" class="btn-small" target="_blank">Acessar</a>
+                </div>
+            </div>
+        </section>
+
         <section class="support-section">
             <div style="text-align: center;">
                 <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px; font-size: 0.8rem;">DÚVIDAS OU PROBLEMAS?</span>
@@ -283,14 +325,13 @@
                     <span class="contact-icon">📱</span>
                     <h3>WhatsApp</h3>
                     <p>(99) 9 9223-8350</p>
-                    <p style="font-size: 0.7rem; opacity: 0.6;">Apenas mensagens</p>
                     <a href="https://wa.me/5599992238350" class="contact-link" target="_blank">Iniciar Conversa</a>
                 </div>
                 <div class="contact-card">
                     <span class="contact-icon">🏢</span>
                     <h3>Prédio I</h3>
                     <p>Coordenadoria de Tecnologia da Informação</p>
-                    <span style="font-size: 0.75rem; color: var(--text-dim);">08h às 12h / 14h às 18h</span>
+                    <span style="font-size: 0.75rem; color: var(--text-dim);">08h às 18h</span>
                 </div>
             </div>
         </section>
@@ -300,6 +341,26 @@
             <p>© 2026 UEMASUL | Coordenadoria de Tecnologia da Informação</p>
         </footer>
     </div>
+
+    <a href="#" id="backToTop" title="Voltar ao topo">↑</a>
+
+    <script>
+        const btnTop = document.getElementById("backToTop");
+
+        window.onscroll = function() {
+            // Se rolar mais de 400px para baixo, mostra o botão
+            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+                btnTop.classList.add("visible");
+            } else {
+                btnTop.classList.remove("visible");
+            }
+        };
+
+        btnTop.onclick = function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    </script>
 
 </body>
 </html>
