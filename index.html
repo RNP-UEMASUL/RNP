@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UEMASUL | Ferramentas Digitais</title>
+    <title>CTI | Ferramentas Digitais</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIÁVEIS DE TEMA (MODO CLARO - AGORA PADRÃO) --- */
+        /* --- VARIÁVEIS DE TEMA (MODO CLARO - PADRÃO) --- */
         :root {
             --bg: #ffffff;
             --primary: #004a99;
@@ -25,7 +25,7 @@
             --fs-trail-opacity: 0.2;
         }
 
-        /* --- MODO ESCURO (CLASSE OPCIONAL) --- */
+        /* --- MODO ESCURO (OPCIONAL) --- */
         body.dark-mode {
             --bg: #030712;
             --primary: #004a99;
@@ -56,16 +56,27 @@
             padding-top: 100px; 
         }
 
-        /* --- AJUSTE DE LOGOS --- */
-        /* No modo claro (padrão), invertemos o logo branco para preto */
-        .logo, footer img { 
-            transition: filter 0.4s ease; 
-            filter: invert(1) brightness(0.2); 
-        }
+        /* --- AJUSTE DE LOGOS (MODIFICADO) --- */
         
-        /* No modo escuro, removemos o filtro para o logo voltar a ser branco */
-        body.dark-mode .logo, body.dark-mode footer img { 
-            filter: none; 
+        /* Logo do Cabeçalho (CTI) - SEM FILTRO DE COR */
+        .logo {
+            height: 55px; /* Um pouco maior já que está sozinha */
+            width: auto;
+            /* Removemos os filtros aqui para a logo CTI ficar original */
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Logo do Rodapé (UEMASUL Branca) - MANTÉM INVERSÃO */
+        footer img { 
+            transition: filter 0.4s ease; 
+            filter: invert(1) brightness(0.2); /* Inverte no modo claro */
+        }
+        body.dark-mode footer img { 
+            filter: none; /* Fica branca no modo escuro */
         }
 
         /* --- BARRA DE PROGRESSO --- */
@@ -84,8 +95,6 @@
             border-bottom: 1px solid var(--glass-border);
             transition: background 0.4s ease, border-color 0.4s ease;
         }
-
-        .logo { height: 40px; width: auto; }
         
         .nav-menu { display: flex; gap: 8px; flex-wrap: nowrap; align-items: center; }
 
@@ -287,7 +296,7 @@
 
     <nav class="main-header">
         <div class="logo-container">
-            <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" class="logo">
+            <img src="https://cti.uemasul.edu.br/wp-content/uploads/2024/08/logo_cti_sem_background.png" alt="CTI" class="logo">
         </div>
 
         <div class="nav-menu">
@@ -451,7 +460,7 @@
         </section>
 
         <footer>
-            <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" style="height: 35px; margin-bottom: 20px;">
+            <img src="https://cti.uemasul.edu.br/wp-content/uploads/2024/08/logo_cti_sem_background.png" alt="UEMASUL" style="height: 35px; margin-bottom: 20px;">
             <p>© 2026 UEMASUL | Coordenadoria de Tecnologia da Informação</p>
         </footer>
     </div>
@@ -464,7 +473,6 @@
         const themeBtn = document.getElementById('themeBtn');
         
         // Verifica se há preferência por MODO ESCURO salva
-        // Se a pessoa nunca acessou, é null, então cai no else (Claro/Padrão)
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-mode');
             themeBtn.innerText = '🌓'; // Lua para indicar que está escuro
