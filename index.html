@@ -18,7 +18,6 @@
             --text-dim: #94a3b8;
         }
 
-        /* --- RESET E BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
@@ -37,26 +36,38 @@
                 radial-gradient(circle at 90% 90%, rgba(0, 168, 89, 0.1) 0%, transparent 40%);
         }
 
-        .container { 
-            width: 100%; 
-            max-width: 1300px; 
-            margin: 0 auto; 
-            padding: 0 24px; 
+        .container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 24px; }
+
+        /* --- NAVEGAÇÃO (Ajustada para não bugar no celular) --- */
+        nav { 
+            padding: 30px 0; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 15px;
         }
-
-        /* --- NAVEGAÇÃO --- */
-        nav { padding: 40px 0; display: flex; justify-content: space-between; align-items: center; }
-        .logo { height: 45px; }
-        .badge { background: var(--glass); border: 1px solid var(--glass-border); padding: 8px 16px; border-radius: 100px; font-size: 0.65rem; font-weight: 800; letter-spacing: 2px; color: var(--text-dim); }
-
-        /* --- HERO (Ajustado para PC e Mobile) --- */
-        .hero { padding: 60px 0 80px; text-align: center; }
-        .hero h1 { 
-            font-size: 2.8rem; /* Tamanho Mobile */
+        .logo { height: 40px; }
+        .badge { 
+            background: var(--glass); 
+            border: 1px solid var(--glass-border); 
+            padding: 6px 12px; 
+            border-radius: 100px; 
+            font-size: 0.65rem; 
             font-weight: 800; 
-            letter-spacing: -2px; 
-            line-height: 1.1;
+            letter-spacing: 2px; 
+            color: var(--text-dim);
+            text-transform: uppercase;
         }
+
+        @media (max-width: 768px) {
+            nav { justify-content: center; text-align: center; }
+            .badge { font-size: 0.52rem; letter-spacing: 0.5px; padding: 5px 10px; }
+        }
+
+        /* --- HERO --- */
+        .hero { padding: 60px 0 80px; text-align: center; }
+        .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -2px; line-height: 1.1; }
 
         @media (min-width: 1024px) {
             .hero { padding: 100px 0 120px; }
@@ -71,11 +82,10 @@
                 animation: typing 3.5s steps(30, end) forwards, blink-caret .75s step-end infinite;
             }
         }
-
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
 
-        /* --- CARDS E GRID --- */
+        /* --- CARDS --- */
         .cafe-card {
             background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
             border: 1px solid var(--glass-border);
@@ -86,24 +96,39 @@
             margin-bottom: 80px;
             backdrop-filter: blur(20px);
         }
-
-        @media (min-width: 1024px) {
-            .cafe-card { grid-template-columns: 1fr 1fr; padding: 60px; gap: 80px; }
-        }
+        @media (min-width: 1024px) { .cafe-card { grid-template-columns: 1fr 1fr; padding: 60px; gap: 80px; } }
 
         .instruction-box { background: rgba(0, 168, 89, 0.05); border-left: 4px solid var(--secondary); padding: 30px; border-radius: 0 20px 20px 0; }
         .instruction-box h4 { color: var(--secondary); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
 
-        /* --- FERRAMENTAS --- */
-        .tool-row { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 40px; 
-            padding: 60px 0; 
-            border-top: 1px solid var(--glass-border); 
-            align-items: center;
+        /* --- BOTÕES (SISTEMA DE DUPLA OPÇÃO) --- */
+        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+        
+        .btn-premium {
+            flex: 1;
+            display: inline-block; padding: 18px 30px; background: #fff; color: #000;
+            text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s;
+            text-align: center; min-width: 140px;
         }
 
+        .btn-about {
+            flex: 1;
+            display: inline-block; padding: 18px 30px; background: transparent; color: #fff;
+            text-decoration: none; border-radius: 100px; font-weight: 600; 
+            border: 1px solid var(--glass-border); transition: 0.4s;
+            text-align: center; min-width: 140px;
+        }
+
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.15); }
+        .btn-about:hover { background: var(--glass); border-color: #fff; }
+
+        @media (max-width: 480px) {
+            .btn-group { flex-direction: column; }
+            .btn-premium, .btn-about { width: 100%; }
+        }
+
+        /* --- GRID FERRAMENTAS --- */
+        .tool-row { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 60px 0; border-top: 1px solid var(--glass-border); align-items: center; }
         @media (min-width: 1024px) {
             .tool-row { grid-template-columns: 1fr 1fr; gap: 100px; padding: 120px 0; }
             .tool-row:nth-child(even) { direction: rtl; }
@@ -112,92 +137,38 @@
 
         .tool-row h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 24px; }
         @media (min-width: 1024px) { .tool-row h2 { font-size: 4rem; } }
-
         .tool-row p { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 30px; font-weight: 300; line-height: 1.6; }
-        @media (min-width: 1024px) { .tool-row p { font-size: 1.3rem; } }
 
-        .btn-premium {
-            display: inline-block; padding: 20px 40px; background: #fff; color: #000;
-            text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s;
-            text-align: center; width: 100%;
-        }
-        @media (min-width: 768px) { .btn-premium { width: auto; } }
-        .btn-premium:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255,255,255,0.15); }
-
-        /* --- ANIMAÇÕES (VISUAL ASSETS) --- */
-        .visual-asset {
-            height: 320px; 
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 32px; position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-        }
-
+        /* --- ASSETS VISUAIS --- */
+        .visual-asset { height: 320px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 32px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         @media (min-width: 1024px) { .visual-asset { height: 500px; border-radius: 48px; } }
 
-        /* --- NOVA ANIMAÇÃO CSS FILESENDER (SUBSTITUI O FOGUETE) --- */
-        .fs-logo-anim {
-            position: relative; width: 100px; height: 100px;
-            display: flex; justify-content: center; align-items: center;
-            margin-bottom: 40px; /* Espaço para a barra de upload */
-        }
-        /* O avião principal */
-        .fs-plane-main {
-            position: absolute; width: 70px; height: 70px;
-            background: var(--primary);
-            /* Cria a forma de avião de papel */
-            clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%);
-            filter: drop-shadow(0 0 25px var(--primary));
-            animation: planeSoar 4s ease-in-out infinite;
-            z-index: 2;
-        }
-        /* O rastro/sombra fantasma */
-        .fs-plane-trail {
-            position: absolute; width: 50px; height: 50px;
-            background: var(--primary);
-            clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%);
-            opacity: 0.3;
-            filter: blur(8px);
-            animation: trailFollow 4s ease-in-out infinite;
-        }
-
-        @keyframes planeSoar {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            25% { transform: translate(25px, -35px) rotate(20deg) scale(1.1); }
-            50% { transform: translate(0, -15px) rotate(0deg) scale(1); }
-            75% { transform: translate(-25px, -35px) rotate(-20deg) scale(1.1); }
-        }
-        @keyframes trailFollow {
-             0%, 100% { transform: translate(-15px, 20px) scale(0.8) rotate(0deg); opacity: 0.2; }
-             25% { transform: translate(5px, -20px) scale(0.9) rotate(20deg); opacity: 0.5; }
-             50% { transform: translate(-15px, 10px) scale(0.8) rotate(0deg); opacity: 0.2; }
-             75% { transform: translate(-40px, -20px) scale(0.9) rotate(-20deg); opacity: 0.5; }
-        }
-
-        /* Barra de upload abaixo da nova logo */
+        /* Animações mantidas */
+        .fs-logo-anim { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; margin-bottom: 40px; }
+        .fs-plane-main { position: absolute; width: 70px; height: 70px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); filter: drop-shadow(0 0 25px var(--primary)); animation: planeSoar 4s ease-in-out infinite; z-index: 2; }
+        .fs-plane-trail { position: absolute; width: 50px; height: 50px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); opacity: 0.3; filter: blur(8px); animation: trailFollow 4s ease-in-out infinite; }
+        @keyframes planeSoar { 0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); } 25% { transform: translate(25px, -35px) rotate(20deg) scale(1.1); } 50% { transform: translate(0, -15px) rotate(0deg) scale(1); } 75% { transform: translate(-25px, -35px) rotate(-20deg) scale(1.1); } }
+        @keyframes trailFollow { 0%, 100% { transform: translate(-15px, 20px) scale(0.8) rotate(0deg); opacity: 0.2; } 50% { transform: translate(-15px, 10px) scale(0.8) rotate(0deg); opacity: 0.2; } }
         .upload-bar-fs { width: 140px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
         .upload-progress-fs { width: 40%; height: 100%; background: var(--primary); animation: loading 2s infinite ease-in-out; }
+        @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
 
-
-        /* --- OUTRAS ANIMAÇÕES (MANTIDAS) --- */
         .library-container { display: flex; gap: 12px; align-items: flex-end; perspective: 1000px; }
         .book-3d { width: 45px; background: var(--secondary); border-radius: 5px; }
         .b2 { height: 200px; animation: bookFloat 4s infinite ease-in-out; box-shadow: 0 20px 40px rgba(0,168,89,0.2); }
+        @keyframes bookFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         .ui-screen { width: 280px; height: 160px; background: rgba(255,255,255,0.03); border: 2px solid var(--accent); border-radius: 20px; position: relative; overflow: hidden; }
         .wave { position: absolute; width: 100%; height: 2px; background: var(--accent); top: 50%; opacity: 0.3; animation: scan 3s infinite linear; }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
 
         .play-sphere { width: 110px; height: 110px; background: var(--eduplay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulseSphere 2s infinite; }
-
-        @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
-        @keyframes bookFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
-        @keyframes pulseSphere { 0% { transform: scale(1); box-shadow: 0 0 30px rgba(255,71,87,0.3); } 50% { transform: scale(1.1); box-shadow: 0 0 60px rgba(255,71,87,0.5); } 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255,71,87,0.3); } }
+        @keyframes pulseSphere { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         /* --- SUPORTE --- */
         .support-section { padding: 80px 0; border-top: 1px solid var(--glass-border); }
         .contact-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 50px; }
         @media (min-width: 768px) { .contact-grid { grid-template-columns: repeat(3, 1fr); } }
-
         .contact-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 40px 24px; border-radius: 24px; text-align: center; transition: 0.3s; }
         .contact-card:hover { border-color: var(--accent); transform: translateY(-8px); }
         .contact-icon { font-size: 2.2rem; margin-bottom: 20px; display: block; }
@@ -214,7 +185,7 @@
     <div class="container">
         <nav>
             <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" class="logo">
-            <div class="badge">RNP 2026</div>
+            <div class="badge">COORDENADORIA DE TECNOLOGIA DA INFORMAÇÃO</div>
         </nav>
 
         <header class="hero">
@@ -223,7 +194,7 @@
 
         <section class="cafe-card">
             <div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Acesso Unificado</h2>
+                <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Acesso Unificado (CAFe)</h2>
                 <p style="color: var(--text-dim); font-size: 1.15rem;">Uma única senha. Um mundo de possibilidades acadêmicas através da rede CAFe.</p>
             </div>
             <div class="instruction-box">
@@ -235,8 +206,11 @@
         <div class="tool-row">
             <div class="content">
                 <h2 style="color: var(--primary);">FileSender</h2>
-                <p>Envie arquivos de até 400GB com a segurança e velocidade da rede nacional de pesquisa.</p>
-                <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Ffilesender.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Ffilesender.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642298_1572" class="btn-premium" target="_blank">Acessar Arquivos</a>
+                <p>Envie arquivos de até 400GB (2TB totais) com a segurança e velocidade da rede nacional de pesquisa.</p>
+                <div class="btn-group">
+                    <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Ffilesender.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Ffilesender.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642298_1572" class="btn-premium" target="_blank">Acessar Arquivos</a>
+                    <a href="sobre-filesender.html" class="btn-about">Saiba mais +</a>
+                </div>
             </div>
             <div class="visual-asset" style="flex-direction: column;">
                 <div class="fs-logo-anim">
@@ -249,9 +223,12 @@
 
         <div class="tool-row">
             <div class="content">
-                <h2 style="color: var(--secondary);">Periódicos</h2>
+                <h2 style="color: var(--secondary);">Periódicos Capes</h2>
                 <p>Explore o portal da CAPES. Milhares de artigos científicos internacionais ao seu alcance.</p>
-                <a href="https://www-periodicos-capes-gov-br.ez418.periodicos.capes.gov.br/index.php/acesso-cafe.html" class="btn-premium" target="_blank">Iniciar Pesquisa</a>
+                <div class="btn-group">
+                    <a href="https://www-periodicos-capes-gov-br.ez418.periodicos.capes.gov.br/index.php/acesso-cafe.html" class="btn-premium" target="_blank">Iniciar Pesquisa</a>
+                    <a href="sobre-periodicos.html" class="btn-about">Saiba mais +</a>
+                </div>
             </div>
             <div class="visual-asset">
                 <div class="library-container">
@@ -264,9 +241,12 @@
 
         <div class="tool-row">
             <div class="content">
-                <h2 style="color: var(--accent);">Conf. Web</h2>
+                <h2 style="color: var(--accent);">Conferência Web</h2>
                 <p>Salas de reuniões estáveis para aulas, bancas e colaboração em tempo real.</p>
-                <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Fconferenciaweb.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Fconferenciaweb.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642646_7d99" class="btn-premium" target="_blank">Entrar na Sala</a>
+                <div class="btn-group">
+                    <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Fconferenciaweb.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Fconferenciaweb.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642646_7d99" class="btn-premium" target="_blank">Entrar na Sala</a>
+                    <a href="sobre-conferencia.html" class="btn-about">Saiba mais +</a>
+                </div>
             </div>
             <div class="visual-asset">
                 <div class="ui-screen"><div class="wave"></div></div>
@@ -277,7 +257,10 @@
             <div class="content">
                 <h2 style="color: var(--eduplay);">Eduplay</h2>
                 <p>O streaming educacional da RNP. Vídeos e podcasts feitos para a educação brasileira.</p>
-                <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Feduplay.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Feduplay.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642679_8a08" class="btn-premium" target="_blank">Abrir Eduplay</a>
+                <div class="btn-group">
+                    <a href="https://ds.cafe.rnp.br/WAYF?entityID=https%3A%2F%2Feduplay.rnp.br%2Fshibboleth-sp2&return=https%3A%2F%2Feduplay.rnp.br%2FShibboleth.sso%2FDS%3FSAMLDS%3D1%26target%3Dcookie%253A1767642679_8a08" class="btn-premium" target="_blank">Abrir Eduplay</a>
+                    <a href="sobre-eduplay.html" class="btn-about">Saiba mais +</a>
+                </div>
             </div>
             <div class="visual-asset">
                 <div class="play-sphere">▶</div>
@@ -286,8 +269,8 @@
 
         <section class="support-section">
             <div style="text-align: center;">
-                <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px; font-size: 0.8rem;">DÚVIDAS?</span>
-                <h2 style="font-size: 2.2rem; margin-top: 10px;">Suporte Técnico</h2>
+                <span style="color: var(--accent); font-weight: 800; letter-spacing: 2px; font-size: 0.8rem;">DÚVIDAS OU PROBLEMAS?</span>
+                <h2 style="font-size: 2.2rem; margin-top: 10px;">Entre em contato</h2>
             </div>
             <div class="contact-grid">
                 <div class="contact-card">
@@ -299,22 +282,22 @@
                 <div class="contact-card">
                     <span class="contact-icon">📱</span>
                     <h3>WhatsApp</h3>
-                    <p>(99) 99223-8350</p>
+                    <p>(99) 9 9223-8350</p>
                     <p style="font-size: 0.7rem; opacity: 0.6;">Apenas mensagens</p>
                     <a href="https://wa.me/5599992238350" class="contact-link" target="_blank">Iniciar Conversa</a>
                 </div>
                 <div class="contact-card">
                     <span class="contact-icon">🏢</span>
-                    <h3>Presencial</h3>
-                    <p>Prédio Administrativo</p>
-                    <span style="font-size: 0.75rem; color: var(--text-dim);">Bloco A - 08h às 18h</span>
+                    <h3>Prédio I</h3>
+                    <p>Coordenadoria de Tecnologia da Informação</p>
+                    <span style="font-size: 0.75rem; color: var(--text-dim);">08h às 12h / 14h às 18h</span>
                 </div>
             </div>
         </section>
 
         <footer>
             <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" style="height: 35px; margin-bottom: 20px;">
-            <p>© 2026 UEMASUL | Tecnologia RNP</p>
+            <p>© 2026 UEMASUL | Coordenadoria de Tecnologia da Informação</p>
         </footer>
     </div>
 
