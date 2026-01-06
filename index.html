@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-br" data-theme="dark">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>UEMASUL | Hub Digital de Elite</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- SISTEMA DE CORES DINÂMICO --- */
-        :root[data-theme="dark"] {
+        :root {
             --bg: #030712;
             --primary: #004a99;
             --secondary: #00a859;
@@ -17,20 +16,6 @@
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
-            --mesh-opacity: 0.12;
-        }
-
-        :root[data-theme="light"] {
-            --bg: #f8fafc;
-            --primary: #004a99;
-            --secondary: #059669;
-            --accent: #d97706;
-            --eduplay: #e11d48;
-            --glass: rgba(0, 74, 153, 0.05);
-            --glass-border: rgba(0, 74, 153, 0.1);
-            --text-main: #0f172a;
-            --text-dim: #475569;
-            --mesh-opacity: 0.06;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -40,9 +25,9 @@
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
+        /* Ajuste para que o scroll não pare em cima do título */
         [id] { scroll-margin-top: 40px; }
 
         .mesh-bg {
@@ -50,22 +35,18 @@
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             background: 
-                radial-gradient(circle at 10% 10%, rgba(0, 74, 153, var(--mesh-opacity)) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(0, 168, 89, var(--mesh-opacity)) 0%, transparent 40%);
+                radial-gradient(circle at 10% 10%, rgba(0, 74, 153, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(0, 168, 89, 0.1) 0%, transparent 40%);
         }
 
         .container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 24px; }
 
         /* --- NAVEGAÇÃO --- */
         nav { padding: 30px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo { height: 40px; }
         
-        .logo { height: 40px; transition: filter 0.3s ease; }
-        /* Filtro para converter logo branco em azul marinho no tema claro */
-        [data-theme="light"] .logo { filter: brightness(0) saturate(100%) invert(17%) sepia(91%) saturate(2135%) hue-rotate(198deg) brightness(96%) contrast(101%); }
-
-        .nav-controls { display: flex; align-items: center; gap: 15px; }
+        /* NOVO MENU */
         .nav-menu { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-        
         .nav-link { 
             background: var(--glass); 
             border: 1px solid var(--glass-border); 
@@ -80,29 +61,14 @@
             transition: 0.3s ease;
         }
         .nav-link:hover { 
-            background: var(--primary); 
+            background: rgba(255,255,255,0.1); 
             color: #fff; 
-            border-color: var(--primary); 
+            border-color: var(--accent); 
             transform: translateY(-2px);
         }
 
-        /* Botão de Tema */
-        #themeToggle {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            width: 38px; height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem;
-            transition: 0.3s ease;
-            color: var(--text-main);
-        }
-        #themeToggle:hover { transform: scale(1.1); background: var(--glass-border); }
-
         @media (max-width: 768px) {
             nav { justify-content: center; text-align: center; }
-            .nav-controls { order: -1; width: 100%; justify-content: center; margin-bottom: 10px; }
             .nav-link { font-size: 0.5rem; padding: 5px 10px; }
         }
 
@@ -125,7 +91,7 @@
 
         /* --- CARDS PRINCIPAIS --- */
         .cafe-card {
-            background: var(--glass);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
             border: 1px solid var(--glass-border);
             border-radius: 32px; padding: 32px; display: grid; gap: 40px;
             margin-bottom: 80px; backdrop-filter: blur(20px);
@@ -136,10 +102,10 @@
         .instruction-box h4 { color: var(--secondary); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
 
         .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
-        .btn-premium { flex: 1; display: inline-block; padding: 18px 30px; background: var(--text-main); color: var(--bg); text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s; text-align: center; min-width: 140px; }
-        .btn-about { flex: 1; display: inline-block; padding: 18px 30px; background: transparent; color: var(--text-main); text-decoration: none; border-radius: 100px; font-weight: 600; border: 1px solid var(--glass-border); transition: 0.4s; text-align: center; min-width: 140px; }
-        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .btn-about:hover { background: var(--glass); border-color: var(--text-main); }
+        .btn-premium { flex: 1; display: inline-block; padding: 18px 30px; background: #fff; color: #000; text-decoration: none; border-radius: 100px; font-weight: 800; transition: 0.4s; text-align: center; min-width: 140px; }
+        .btn-about { flex: 1; display: inline-block; padding: 18px 30px; background: transparent; color: #fff; text-decoration: none; border-radius: 100px; font-weight: 600; border: 1px solid var(--glass-border); transition: 0.4s; text-align: center; min-width: 140px; }
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.15); }
+        .btn-about:hover { background: var(--glass); border-color: #fff; }
 
         /* --- GRID FERRAMENTAS --- */
         .tool-row { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 60px 0; border-top: 1px solid var(--glass-border); align-items: center; }
@@ -153,7 +119,7 @@
         @media (min-width: 1024px) { .tool-row h2 { font-size: 4rem; } }
         .tool-row p { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 30px; font-weight: 300; line-height: 1.6; }
 
-        /* --- SEÇÃO RNP+ --- */
+        /* --- SEÇÃO RNP+ (GRID DE CARDS) --- */
         .rnp-plus-section { padding: 80px 0; border-top: 1px solid var(--glass-border); }
         .rnp-plus-header { text-align: center; margin-bottom: 60px; }
         .rnp-plus-header h2 { font-size: 2.5rem; margin-bottom: 15px; font-weight: 800; }
@@ -164,13 +130,13 @@
             background: var(--glass); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; 
             transition: 0.4s; display: flex; flex-direction: column; justify-content: space-between; backdrop-filter: blur(10px);
         }
-        .tool-card:hover { background: rgba(0, 74, 153, 0.05); transform: translateY(-5px); border-color: var(--primary); }
+        .tool-card:hover { background: rgba(255, 255, 255, 0.07); transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.2); }
         .tool-card-icon { font-size: 1.8rem; margin-bottom: 15px; display: block; }
-        .tool-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: var(--text-main); }
+        .tool-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #fff; }
         .tool-card p { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px; line-height: 1.5; flex-grow: 1; }
         
-        .btn-small { padding: 12px; border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-align: center; transition: 0.3s; background: var(--glass); }
-        .btn-small:hover { background: var(--text-main); color: var(--bg); }
+        .btn-small { padding: 12px; border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 700; text-align: center; transition: 0.3s; background: rgba(255,255,255,0.03); }
+        .btn-small:hover { background: #fff; color: #000; }
 
         /* --- ASSETS VISUAIS --- */
         .visual-asset { height: 320px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 32px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
@@ -182,7 +148,7 @@
         .fs-plane-trail { position: absolute; width: 50px; height: 50px; background: var(--primary); clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%); opacity: 0.3; filter: blur(8px); animation: trailFollow 4s ease-in-out infinite; }
         @keyframes planeSoar { 0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); } 25% { transform: translate(25px, -35px) rotate(20deg) scale(1.1); } 50% { transform: translate(0, -15px) rotate(0deg) scale(1); } 75% { transform: translate(-25px, -35px) rotate(-20deg) scale(1.1); } }
         @keyframes trailFollow { 0%, 100% { transform: translate(-15px, 20px) scale(0.8) rotate(0deg); opacity: 0.2; } 50% { transform: translate(-15px, 10px) scale(0.8) rotate(0deg); opacity: 0.2; } }
-        .upload-bar-fs { width: 140px; height: 6px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; }
+        .upload-bar-fs { width: 140px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
         .upload-progress-fs { width: 40%; height: 100%; background: var(--primary); animation: loading 2s infinite ease-in-out; }
         @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
 
@@ -191,11 +157,11 @@
         .b2 { height: 200px; animation: bookFloat 4s infinite ease-in-out; box-shadow: 0 20px 40px rgba(0,168,89,0.2); }
         @keyframes bookFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .ui-screen { width: 280px; height: 160px; background: var(--glass); border: 2px solid var(--accent); border-radius: 20px; position: relative; overflow: hidden; }
+        .ui-screen { width: 280px; height: 160px; background: rgba(255,255,255,0.03); border: 2px solid var(--accent); border-radius: 20px; position: relative; overflow: hidden; }
         .wave { position: absolute; width: 100%; height: 2px; background: var(--accent); top: 50%; opacity: 0.3; animation: scan 3s infinite linear; }
         @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
 
-        .play-sphere { width: 110px; height: 110px; background: var(--eduplay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulseSphere 2s infinite; color: #fff; }
+        .play-sphere { width: 110px; height: 110px; background: var(--eduplay); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulseSphere 2s infinite; }
         @keyframes pulseSphere { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         /* --- SUPORTE --- */
@@ -209,14 +175,31 @@
 
         /* --- VOLTAR AO TOPO --- */
         #backToTop {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-            background: var(--text-main); color: var(--bg); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden;
-            transition: 0.4s; text-decoration: none; font-size: 1.2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        #backToTop.visible { opacity: 1; visibility: visible; }
+        #backToTop.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        #backToTop:not(.visible) { transform: translateY(20px); }
+        #backToTop:hover { background: #fff; color: #000; transform: scale(1.1) translateY(-5px); }
 
         footer { padding: 60px 0 40px; text-align: center; opacity: 0.5; font-size: 0.85rem; border-top: 1px solid var(--glass-border); }
 
@@ -229,17 +212,14 @@
     <div class="container">
         <nav>
             <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" class="logo">
-            <div class="nav-controls">
-                <div class="nav-menu">
-                    <a href="#cafe" class="nav-link">CAFe</a>
-                    <a href="#filesender" class="nav-link">FileSender</a>
-                    <a href="#capes" class="nav-link">Capes</a>
-                    <a href="#conferencia" class="nav-link">Web Conf</a>
-                    <a href="#eduplay" class="nav-link">Eduplay</a>
-                    <a href="#rnp-plus" class="nav-link">RNP+</a>
-                    <a href="#contato" class="nav-link">Suporte</a>
-                </div>
-                <button id="themeToggle" title="Alternar tema">🌓</button>
+            <div class="nav-menu">
+                <a href="#cafe" class="nav-link">CAFe</a>
+                <a href="#filesender" class="nav-link">FileSender</a>
+                <a href="#capes" class="nav-link">Capes</a>
+                <a href="#conferencia" class="nav-link">Web Conf</a>
+                <a href="#eduplay" class="nav-link">Eduplay</a>
+                <a href="#rnp-plus" class="nav-link">RNP+</a>
+                <a href="#contato" class="nav-link">Suporte</a>
             </div>
         </nav>
 
@@ -389,7 +369,7 @@
         </section>
 
         <footer>
-            <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" class="logo" style="height: 35px; margin-bottom: 20px;">
+            <img src="https://www.uemasul.edu.br/wp-content/uploads/2024/08/logo_UEMASUL-BRANCA.png" alt="UEMASUL" style="height: 35px; margin-bottom: 20px;">
             <p>© 2026 UEMASUL | Coordenadoria de Tecnologia da Informação</p>
         </footer>
     </div>
@@ -397,28 +377,8 @@
     <a href="#" id="backToTop" title="Voltar ao topo">↑</a>
 
     <script>
-        // LÓGICA DE TEMA (DARK/LIGHT)
-        const themeToggle = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
-
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        htmlElement.setAttribute('data-theme', savedTheme);
-        updateToggleIcon(savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            htmlElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateToggleIcon(newTheme);
-        });
-
-        function updateToggleIcon(theme) {
-            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
-
-        // LÓGICA DO BOTÃO VOLTAR AO TOPO
         const btnTop = document.getElementById("backToTop");
+
         window.onscroll = function() {
             if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
                 btnTop.classList.add("visible");
@@ -426,10 +386,12 @@
                 btnTop.classList.remove("visible");
             }
         };
+
         btnTop.onclick = function(e) {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
     </script>
+
 </body>
 </html>
