@@ -6,7 +6,7 @@
     <title>CTI | Ferramentas Digitais RNP</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIÁVEIS DE TEMA (MODO CLARO - PADRÃO) --- */
+        /* --- VARIÁVEIS DE TEMA --- */
         :root {
             --bg: #ffffff;
             --primary: #004a99;
@@ -25,7 +25,7 @@
             --fs-trail-opacity: 0.2;
         }
 
-        /* --- MODO ESCURO (OPCIONAL) --- */
+        /* --- MODO ESCURO --- */
         body.dark-mode {
             --bg: #030712;
             --primary: #004a99;
@@ -96,7 +96,7 @@
 
         @media (max-width: 900px) {
             .nav-link { display: none; }
-            .nav-link:last-child { display: block; } /* Mantém botão suporte */
+            .nav-link:last-child { display: block; }
             .main-header { padding: 0 20px; }
         }
 
@@ -215,7 +215,7 @@
         .btn-small { padding: 12px; border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-align: center; transition: 0.3s; background: rgba(255,255,255,0.03); }
         .btn-small:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-        /* --- BANNER DO DRIVE (NOVO) --- */
+        /* --- BANNER DO DRIVE --- */
         .drive-section { padding: 0 0 80px; }
         
         .drive-card {
@@ -259,10 +259,10 @@
         .visual-asset { height: 320px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 32px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         @media (min-width: 1024px) { .visual-asset { height: 500px; border-radius: 48px; } }
 
-        /* --- VÍDEO RESPONSIVO (NOVO) --- */
+        /* --- VÍDEO RESPONSIVO --- */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* Proporção 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             width: 100%;
